@@ -1,4 +1,6 @@
-const jsonData = require('../src/data/audit')
+// In order to run this script add 'audit.json' into the root directory
+// the file is too large exceeds 100mb and can't be stored in github by default
+const jsonData = require('../audit')
 const fs = require('fs');
 
 const riskTypes = [];

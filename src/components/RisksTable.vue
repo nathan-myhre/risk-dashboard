@@ -7,7 +7,7 @@
             default-sort-direction="asc"
             default-sort="risk"
             sort-icon-size="is-small"
-            per-page="50"
+            per-page="30"
             pagination-position="bottom"
             pagination-order="is-centered"
             detailed
@@ -23,6 +23,7 @@
                 v-slot="props"
                 field="id"
                 label="ID"
+                searchable
             >
                 {{ props.row.id }}
             </b-table-column>
@@ -40,6 +41,7 @@
                 field="risk"
                 label="Risk Type"
                 sortable
+                searchable
             >
                 {{ props.row.risk }}
             </b-table-column>
@@ -48,11 +50,12 @@
                 field="risk_level"
                 label="Risk Level"
                 sortable
+                searchable
             >
                 {{ props.row.risk_level }}
             </b-table-column>
 
-            <!-- expandable detailed content -->
+            <!-- expandable detailed content slot -->
             <template #detail="props">
                 <h3 class="is-size-4">
                     Flagged Content
@@ -76,6 +79,13 @@
                     <div class="content-item">
                         <strong>Browser UUID:</strong> {{ JSON.parse(props.row.meta).browser_uuid }}
                     </div>
+                </div>
+            </template>
+
+            <!-- empty slot -->
+            <template #empty>
+                <div class="has-text-centered">
+                    No records
                 </div>
             </template>
         </b-table>

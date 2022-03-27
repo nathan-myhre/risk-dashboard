@@ -1,21 +1,30 @@
 <template>
     <div id="app">
-        <img
-            alt="Vue logo"
-            src="./assets/logo.png"
-        >
-        <HelloWorld msg="Welcome to Your Vue.js App" />
+        <div>
+            Total count: {{ data.totalRecordsCount }}
+        </div>
+        <div>
+            Risks count: {{ data.withRiskRecordsCount }}
+        </div>
+        <risks-table :data="data" />
     </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import auditData from '@/data/withRisks.json';
+
+import RisksTable from './components/RisksTable.vue'
 
 export default {
-    name: 'App',
+    name: 'RiskDashboard',
+
     components: {
-        HelloWorld
+        RisksTable,
     },
+
+    data: () => ({
+        data: auditData,
+    }),
 }
 </script>
 
@@ -25,11 +34,11 @@ export default {
 @import "~buefy/src/scss/buefy";
 
 #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
+    font-family: 'Lato', sans-serif;
+
+    @include desktop {
+        max-width: 80vw;
+        margin: auto;
+    }
 }
 </style>

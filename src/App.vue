@@ -3,12 +3,7 @@
         <h1 class="title is-1 has-text-centered">
             Risks Dashboard
         </h1>
-        <div>
-            Total count: {{ data.totalRecordsCount }}
-        </div>
-        <div>
-            Risks count: {{ data.riskRecordsCount }}
-        </div>
+        <risks-pie-chart :chart-data="data.typesWithCount" />
         <risks-table :data="data" />
     </div>
 </template>
@@ -16,12 +11,14 @@
 <script>
 import auditData from '@/data/risks.json';
 
+import RisksPieChart from './components/RisksPieChart.vue'
 import RisksTable from './components/RisksTable.vue'
 
 export default {
     name: 'RiskDashboard',
 
     components: {
+        RisksPieChart,
         RisksTable,
     },
 
@@ -38,10 +35,10 @@ export default {
 
 #app {
     font-family: 'Lato', sans-serif;
+    margin: 2rem auto;
 
     @include desktop {
         max-width: 80vw;
-        margin: auto;
     }
 }
 </style>

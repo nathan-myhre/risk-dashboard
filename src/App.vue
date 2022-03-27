@@ -1,17 +1,20 @@
 <template>
     <div id="app">
+        <h1 class="title is-1 has-text-centered">
+            Risks Dashboard
+        </h1>
         <div>
             Total count: {{ data.totalRecordsCount }}
         </div>
         <div>
-            Risks count: {{ data.withRiskRecordsCount }}
+            Risks count: {{ data.riskRecordsCount }}
         </div>
         <risks-table :data="data" />
     </div>
 </template>
 
 <script>
-import auditData from '@/data/withRisks.json';
+import auditData from '@/data/risks.json';
 
 import RisksTable from './components/RisksTable.vue'
 

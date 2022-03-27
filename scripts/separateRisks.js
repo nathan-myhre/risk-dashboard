@@ -1,18 +1,39 @@
 const jsonData = require('../src/data/audit')
 const fs = require('fs');
 
-// filter out content with risk levels that are not 0
-const riskContent = jsonData.RECORDS.filter((record) => JSON.parse(record.risk_level) !== 0);
-
-const output = {
+const riskTypes = [];
+const riskData = {
+    typesWithCount: [],
     totalRecordsCount: jsonData.RECORDS.length,
-    withRiskRecordsCount: riskContent.length,
-    records: riskContent,
-}
+};
+
+// filter out content with risk levels that are not 0
+const riskContent = jsonData.RECORDS.filter((record) => {
+    if (record.risk) {
+        // use riskTypes array as key for riskData count
+        const index = riskTypes.indexOf(record.risk);
+        // increment count if type has already been seen
+        if (index !== -1) {
+            riskData.typesWithCount[index].count += 1;
+        } else {
+            // add new type and set count to 1 for first sighting
+            riskTypes.push(record.risk);
+            riskData.typesWithCount.push({
+                type: record.risk,
+                count: 1,
+            });
+        }
+    }
+
+    return JSON.parse(record.risk_level) !== 0
+});
+
+riskData['riskRecordsCount'] = riskContent.length;
+riskData['records'] = riskContent;
 
 // create new json file for content with risk_levels
-fs.writeFile('./src/data/withRisks.json', JSON.stringify(output), 'utf8', (err) => {
+fs.writeFile('./src/data/risks.json', JSON.stringify(riskData), 'utf8', (err) => {
     if (err) return console.log(err);
 
-    console.log('withRisks.json file saved');
+    console.log('risks.json file saved');
 });
